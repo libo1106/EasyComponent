@@ -1,0 +1,13 @@
+.App {
+  font-family: sans-serif;
+  text-align: center;
+}
+
+input:required {
+  box-shadow: none;
+}
+
+input:invalid,
+input:required:invalid {
+  box-shadow: 0px 0px 2px 2px #f44336;
+}

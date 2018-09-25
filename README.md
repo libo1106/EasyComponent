@@ -1,2 +1,0 @@
-# EasyComponent
-Created with CodeSandbox
