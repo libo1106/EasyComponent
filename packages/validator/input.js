@@ -1,4 +1,5 @@
 import React, { Component, createRef } from "react";
+import propTypes from "prop-types";
 
 class Input extends Component {
   static isIPv6(value) {
@@ -10,14 +11,6 @@ class Input extends Component {
     return /^(25[0-5]|2[0-4]\d|[01]?\d\d?)\.(25[0-5]|2[0-4]\d|[01]?\d\d?)\.(25[0-5]|2[0-4]\d|[01]?\d\d?)\.(25[0-5]|2[0-4]\d|[01]?\d\d?)$/i.test(
       value
     );
-  }
-
-  static isInteger(value) {
-    if (value === "") {
-      return false;
-    }
-
-    return /^-?\d+$/.test(value);
   }
 
   constructor(props) {
@@ -48,8 +41,14 @@ class Input extends Component {
     // 给原生 input 元素补上 validate 方法，供 HTMLFormElements.prototypes.elements 的时候使用
     inputElement.validate = () => {
       let res = props.validate(inputElement.value);
-      inputElement.setCustomValidity(res);
-      return res === "";
+
+      if (res) {
+        inputElement.setCustomValidity("");
+      } else {
+        inputElement.setCustomValidity(props.customValidity || "输入内容有误");
+      }
+
+      return res;
     };
   }
 
@@ -74,8 +73,14 @@ class Input extends Component {
 
     // 执行校验
     let res = props.validate(evt.target.value);
-    // 设置校验结果
-    this.el.current.setCustomValidity(res);
+
+    // 更新校验结果
+    if (res) {
+      this.el.current.setCustomValidity("");
+    } else {
+      this.el.current.setCustomValidity(props.customValidity || "输入内容有误");
+    }
+
     // 交给源事件进行处理
     return originEventHandler(evt);
   }
@@ -83,7 +88,7 @@ class Input extends Component {
   render() {
     const { props } = this;
 
-    let { validate, onBlur, onChange, ...attrs } = props;
+    let { validate, customValidity, onBlur, onChange, ...attrs } = props;
 
     return (
       <input
@@ -95,5 +100,10 @@ class Input extends Component {
     );
   }
 }
+
+Input.propTypes = {
+  customValidity: propTypes.string,
+  validate: propTypes.func
+};
 
 export { Input };

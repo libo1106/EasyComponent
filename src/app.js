@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import _ from "lodash";
 
 import { Input, Form } from "../packages/validator";
 
@@ -22,13 +23,17 @@ class App extends Component {
         <div>
           <Form id="form" onSubmit={evt => alert("提交成功")}>
             <Input
-              placeholder="请输入金额"
+              placeholder="请输入个数"
               value={state.value}
               onChange={evt => this.setState({ value: evt.target.value })}
               validate={value => {
-                return Input.isInteger(value) ? "" : "只能输入数字";
+                let number = Number(value);
+                return _.isInteger(number) && number > 0;
               }}
+              customValidity="只能输入正整数"
             />
+
+            <Input value={state.name} />
           </Form>
         </div>
 
