@@ -13,6 +13,10 @@ class Input extends Component {
     );
   }
 
+  static isEmail(value) {
+    return /\S+@\S+/.test(value);
+  }
+
   constructor(props) {
     super(props);
 
