@@ -7,3 +7,5 @@ import "./styles.css";
 
 const rootElement = document.getElementById("root");
 ReactDOM.render(<App />, rootElement);
+
+console.log("codesandbox 的 gthub 同步好诡异");
