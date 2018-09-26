@@ -9,24 +9,25 @@
 内置诸如 IPv4\IPv6\Email 等简单校验规则
 
 ```
-<Form onSubmit={/* 这里执行业务的 submit 行为 */}>
-
-  <Input 
+<Form onSubmit={evt => alert("提交成功")}>
+  <Input
     placeholder="请输入邮箱"
     type="text"
+    value={state.email}
     validate={Input.isEmail}
+    onChange={evt => this.setState({ email: evt.target.value })}
     customValidity="请输入正确的邮箱地址"
   />
 
-  <Input 
+  <Input
     placeholder="请输入密码，至少8位"
-    type="password" 
+    type="password"
     value={state.password}
-    onChange={evt => this.setState({password: evt.target.value})}
-    validate={value => return value.length > 8}
+    onChange={evt => this.setState({ password: evt.target.value })}
+    validate={value => Boolean(value.length > 8)}
     customValidity="密码至少8位"
   />
 
-  <buttom type="submit">提交</button>
+  <button>提交</button>
 </Form>
 ```
