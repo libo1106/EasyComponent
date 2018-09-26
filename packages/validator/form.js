@@ -14,17 +14,23 @@ class Form extends Component {
     let length = formElement.elements.length;
     let i = 0;
 
+    // HTMLFormElement.prototype.elements 对象没有 forEach，只能用 for 处理
     for (i; i < length; i++) {
       let element = formElement.elements[i];
 
+      // 如果元素被禁止，退出
+      if (element.disabled) {
+        continue;
+      }
+
       // 如果不用校验，退出
       if (!element.validate) {
-        break;
+        continue;
       }
 
       // 如果校验成功。退出
       if (element.validate()) {
-        break;
+        continue;
       }
 
       // 有任何一个校验失败，则立即返回 false
