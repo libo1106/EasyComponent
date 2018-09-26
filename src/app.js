@@ -8,7 +8,8 @@ class App extends Component {
     super(props);
 
     this.state = {
-      value: ""
+      email: "",
+      password: ""
     };
   }
 
@@ -23,17 +24,22 @@ class App extends Component {
         <div>
           <Form id="form" onSubmit={evt => alert("提交成功")}>
             <Input
-              placeholder="请输入个数"
-              value={state.value}
-              onChange={evt => this.setState({ value: evt.target.value })}
-              validate={value => {
-                let number = Number(value);
-                return _.isInteger(number) && number > 0;
-              }}
-              customValidity="只能输入正整数"
+              placeholder="请输入邮箱"
+              type="text"
+              value={state.email}
+              validate={Input.isEmail}
+              onChange={evt => this.setState({ email: evt.target.value })}
+              customValidity="请输入正确的邮箱地址"
             />
 
-            <Input value={state.name} />
+            <Input
+              placeholder="请输入密码，至少8位"
+              type="password"
+              value={state.password}
+              onChange={evt => this.setState({ password: evt.target.value })}
+              validate={value => Boolean(value.length > 8)}
+              customValidity="密码至少8位"
+            />
           </Form>
         </div>
 

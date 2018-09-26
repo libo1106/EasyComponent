@@ -1,6 +1,15 @@
 import React, { Component } from "react";
 
 class Form extends Component {
+  /**
+   * @name 检查整个表单区域内容是否合法
+   * @description
+   * HTMLFormElement.prototype.checkValidity() 方法
+   * 依赖每个元素必须有执行过 setCustomValidity，
+   * 否则会导致未输入的元素不被检查
+   * 如果使用 required attr，在 React 下面会一直处于 invalid 状态
+   * 故采用自行实现一个 checkValidity 的方案
+   * */
   static checkValidity(formElement) {
     let length = formElement.elements.length;
     let i = 0;
