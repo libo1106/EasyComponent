@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-cn">
 
 <head>
 	<meta charset="utf-8">
@@ -21,6 +21,11 @@
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
 	<title>React App</title>
+	<script src="https://cdn.polyfill.io/v2/polyfill.min.js"></script>
+	<script src="https://browser.sentry-cdn.com/4.0.5/bundle.min.js" crossorigin="anonymous"></script>
+	<script>
+        Sentry.init({ dsn: 'https://a41eba50f9874e5aa6644685bd54cb36@sentry.io/1289908' });
+	</script>
 </head>
 
 <body>
