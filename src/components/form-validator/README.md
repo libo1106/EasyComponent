@@ -57,5 +57,5 @@
 
 </Form>
 
-<button form="form-id">提交</button>
+<button form="form-id" type="submit">提交</button>
 ```
