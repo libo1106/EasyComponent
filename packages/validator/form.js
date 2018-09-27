@@ -11,6 +11,8 @@ class Form extends Component {
    * 故采用自行实现一个 checkValidity 的方案
    * */
   static checkValidity(formElement) {
+    debugger;
+
     let length = formElement.elements.length;
     let i = 0;
 

@@ -1,5 +1,6 @@
 import React, { Component, createRef } from "react";
 import propTypes from "prop-types";
+import classNames from "classnames";
 
 class Input extends Component {
   static isIPv6(value) {
@@ -16,6 +17,11 @@ class Input extends Component {
   static isEmail(value) {
     return /\S+@\S+/.test(value);
   }
+
+  // :invalid :valid 仅支持到 IE10，这里用挂 state 到 class 上面兼容 IE9
+  state = {
+    invalid: false
+  };
 
   constructor(props) {
     super(props);
@@ -52,6 +58,8 @@ class Input extends Component {
         inputElement.setCustomValidity(props.customValidity || "输入内容有误");
       }
 
+      this.setState({ invalid: !res });
+
       return res;
     };
   }
@@ -85,18 +93,33 @@ class Input extends Component {
       this.el.current.setCustomValidity(props.customValidity || "输入内容有误");
     }
 
+    this.setState({ invalid: !res });
     // 交给源事件进行处理
     return originEventHandler(evt);
   }
 
   render() {
-    const { props } = this;
+    const { props, state } = this;
 
-    let { validate, customValidity, onBlur, onChange, ...attrs } = props;
+    let {
+      validate,
+      customValidity,
+      onBlur,
+      onChange,
+      className,
+      ...attrs
+    } = props;
 
     return (
       <input
         {...attrs}
+        className={classNames(
+          {
+            invalid: state.invalid,
+            valid: !state.invalid
+          },
+          className
+        )}
         onBlur={this.update}
         onChange={this.update}
         ref={this.el}

@@ -3,6 +3,7 @@
   text-align: center;
 }
 
+input.invalid,
 input:invalid {
   border: 1px solid #f44336;
 }
