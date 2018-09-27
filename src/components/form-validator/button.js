@@ -10,16 +10,23 @@ const Button = (props) => {
 
 }
 
-const handlerClick = function (evt, formAttr, originClickHandler) {
+const handlerClick = function (evt, formAttr, originClickHandler = () => console.log('未绑定 onClick 事件')) {
 
-    // 没有使用 form attrs 的，保留原来机制
+    // 没有使用 form attrs 的，保留原来的行为
     if (!formAttr) return originClickHandler(evt);
 
-    evt.preventDefault();
+    // 如果不是 submit ，保留原来的行为
+    if (evt.target.type !== 'submit') return originClickHandler(evt);
 
+    // 寻找目标 form
     let formEle = document.getElementById(formAttr);
 
-    if (!formEle) return
+    // 找不到目标 form ，保留原来的行为
+    if (!formEle) return originClickHandler(evt);
+
+    // 阻止掉默认的 type=submit 的 button 的 click 事件，避免触发后续的 submit
+    // submit 在随后模拟一个
+    evt.preventDefault();
 
     // 这里要模拟一次 submit 事件，且推入异步队列中，在 click  之后触发
     // 直接用 formEle.submit() 会导致 onSubmit 没有被触发
@@ -28,7 +35,7 @@ const handlerClick = function (evt, formAttr, originClickHandler) {
     }, 100)
 
     // 恢复原来的 click
-    originClickHandler && originClickHandler(evt)
+    originClickHandler(evt)
 }
 
 const dispatchSubmitEvent = function (element) {
